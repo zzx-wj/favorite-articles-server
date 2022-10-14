@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="file" id="myfile">
+  <hr>
+  <button id="btn">上传文件</button>
+</body>
+<script>
+  // 上传文件
+  const btnEl = document.querySelector("#btn");
+  const fileEl = document.querySelector("#myfile");
+  const chunk = 5 * 1024;//分片大小：5kb
+  let index = 0;
+  const upload = () => {
+    const uploadFile = fileEl.files[0]
+    console.log(uploadFile)
+    const [fileName, ext] = fileEl.files[0].name.split(".")
+    //文件分片
+    if (fileEl.files[0].size < index * chunk) return;//终止条件
+    const blob = uploadFile.slice(index * chunk, (index + 1) * chunk)
+    const chunkFile = new File([blob], `${fileName}${index}.${ext}`)
+
+    const formData = new FormData();
+    formData.append("file", chunkFile)
+
+    fetch("/upload", {
+      method: "post",
+      body: formData,
+    }).then((res) => {
+      index++;
+      upload()
+      // console.log(res)
+    })
+  }
+  btnEl.addEventListener('click', upload);
+</script>
+
+</html>
