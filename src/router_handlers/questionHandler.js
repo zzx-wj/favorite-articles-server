@@ -1,11 +1,5 @@
 const connection = require("../../db/index")
-const wait = (delay = 300) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve()
-    }, delay)
-  })
-}
+const { wait } = require("../utils/util")
 
 // 问题标签查询
 exports.queryQuestionTabs = (req, res) => {
@@ -52,7 +46,6 @@ exports.queryQuestionList = async (req, res) => {
         { _id: "5b049cc861d5763602b2f77629c89091", name: "手写深拷贝", tags: ["java", "百度", "社招"], type: '简答', diffculty: '简单', createDate: '2022-06-16', view: 37282, favour: 828, comment: 92, attention: 777, },
         { _id: "bf4a0bf261d03c2b0205e54a7ed9142e", name: "xml与json的却别", tags: ["java", "后端"], detail: "<p>spring的常用注解有哪些？</p>", type: '选择', diffculty: '简单', createDate: '2022-07-22', view: 37282, favour: 828, comment: 92, attention: 777, },
         { _id: "54ad1eea61ce666e01d64c97461264c6", name: "高度塌陷与外边距合并", tags: ["javascript", "前端"], detail: "<p>什么是'暂时性死区'？</p>", type: '简答', diffculty: '简单', createDate: '2022-03-26', view: 37282, favour: 828, comment: 92, attention: 777, },
-
       ]
     }
   )
